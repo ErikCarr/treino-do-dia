@@ -27,6 +27,27 @@
     render();
   }
 
+  /* Plano completo, para o responsável ver as questões (e as respostas) antes do aluno */
+  function planQ(q, p) {
+    const stat = p.solved ? '<span class="ok">✓</span>' : p.helped ? '<span class="bad">ajuda</span>' : p.tries ? '<span class="warn">' + p.tries + '×</span>' : '<span class="mut">·</span>';
+    let ans;
+    if (q.type === 'mc') ans = (q.opts || []).map(o => '<div class="small ' + (o.ok ? 'ok' : 'mut') + '">' + (o.ok ? '✔ ' : '✘ ') + esc(o.t) + '</div>').join('');
+    else ans = '<div class="small"><b>Resposta:</b> ' + esc([q.pre, q.vtxt, q.post].filter(Boolean).join(' ')) + '</div>';
+    return '<li><div class="row" style="align-items:flex-start;flex-wrap:nowrap"><span style="min-width:34px">' + stat + '</span><div><div class="small mut">' + esc(q.id) + ' · ' + (LV[q.lv] || '') + (q.photo ? ' · pede foto' : '') + '</div>' +
+      '<div>' + esc(q.text).replace(/\n/g, '<br>') + '</div>' + ans + (q.sol ? '<div class="small mut">' + esc(q.sol) + '</div>' : '') + '</div></div></li>';
+  }
+  function planSection(plan, st, cur, P) {
+    let h = '<section class="card"><h2>Plano do aluno (' + plan.length + ' dias)</h2><p class="small mut">Toque no dia para ver as questões e as respostas. ✓ resolveu · ajuda = pediu ajuda · 3× = tentativas sem resolver.</p>';
+    plan.forEach((d, i) => {
+      const di = st.days[i], tag = di.done ? '<span class="tag ok">concluído</span>' : i === cur ? '<span class="tag warn">hoje</span>' : '<span class="tag">a fazer</span>';
+      h += '<details' + (i === cur ? ' open' : '') + ' style="border-top:1px solid var(--line);padding:6px 0"><summary style="cursor:pointer"><b>Dia ' + d.day + '</b> · ' + esc(d.title) + (d.sim ? ' · <b>simulado</b>' : '') + ' ' + tag + ' <span class="small mut">sem. ' + d.week + ' · ' + d.n + ' questões · ~' + d.mins + ' min</span></summary>' +
+        '<p class="small mut">' + esc(d.focus) + '</p>';
+      d.blocks.forEach(b => { h += '<h3>' + esc(b.name) + ' (' + b.min + ' min)</h3><ul class="plain" style="list-style:none;padding:0;display:grid;gap:10px">' + b.qids.map(id => byId[id]).filter(Boolean).map(q => planQ(q, P[q.id])).join('') + '</ul>'; });
+      h += '</details>';
+    });
+    return h + '</section>';
+  }
+
   function render() {
     const tries = D.events.filter(e => e.type === 'try' && !e.rev);
     const { P, xp, stars, streak } = computeProg(QUESTIONS, byId, D.events);
@@ -42,6 +63,7 @@
     if (st.status === 'descanso') h += '<p class="small mut">O dia de hoje já foi concluído; o próximo abre amanhã. <button class="ghost" id="lib">Liberar o próximo dia hoje</button></p>';
     if (di && di.photoMiss) h += '<p class="small warn">Faltam ' + di.photoMiss + ' foto(s) do caderno neste dia.</p>';
     h += '</section>';
+    h += planSection(plan, st, cur, P);
     /* esforço */
     const recent = tries.filter(e => e.ts > Date.now() - 7 * 864e5);
     const R = recent.length ? recent : tries;
