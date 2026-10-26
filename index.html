@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
+<meta name="theme-color" content="#141a2e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>Treino do Dia</title>
+<link rel="stylesheet" href="app.css?v=202610260920">
+</head>
+<body data-view="home">
+<div id="app">
+<header id="hud" hidden></header>
+<div id="banner" hidden></div>
+<main id="view"></main>
+</div>
+<div id="sheet" hidden></div>
+<div id="lvup" hidden></div>
+<div id="toast" class="toast" role="status"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<input id="cam" type="file" accept="image/*" capture="environment" hidden>
+<script src="config.js?v=202610260920"></script>
+<script src="vendor/supabase.js"></script>
+<script src="lib.js?v=202610260920"></script>
+<script src="app.js?v=202610260920"></script>
+<script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
+</body>
+</html>

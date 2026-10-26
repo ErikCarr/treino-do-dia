@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Painel do responsável</title>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--fg:#1c2340;--mut:#5b6486;--line:#dfe3f0;--acc:#2459b8;--ok:#1e8f4d;--bad:#c62f4d;--warn:#b86e00;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141a2e;--card:#1f2748;--fg:#f4f6ff;--mut:#a9b3dc;--line:#35407a;--acc:#6ea0ff;--ok:#4ad98a;--bad:#ff6b88;--warn:#ffb84d;color-scheme:dark}}
+[hidden]{display:none!important}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 system-ui,sans-serif;padding:16px}
+main{max-width:980px;margin:0 auto;display:grid;gap:16px}
+h1{font-size:24px;margin:0}h2{font-size:18px;margin:0 0 10px}h3{font-size:15px;margin:12px 0 6px;color:var(--mut)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.sp{flex:1}
+button,input,select{font:inherit;color:inherit}
+button{background:var(--acc);color:#fff;border:0;border-radius:10px;padding:8px 14px;cursor:pointer}button.ghost{background:transparent;color:var(--acc);border:1px solid var(--line)}button.red{background:var(--bad)}
+input,select{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.kpi{background:var(--bg);border-radius:12px;padding:10px 12px}.kpi b{display:block;font-size:24px}.kpi span{font-size:13px;color:var(--mut)}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--mut);font-weight:600}
+.wrap{overflow-x:auto}.tag{display:inline-block;padding:1px 8px;border-radius:10px;font-size:12px;background:var(--bg);border:1px solid var(--line)}
+.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}.mut{color:var(--mut)}.small{font-size:13px}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}.gal figure{margin:0;background:var(--bg);border-radius:12px;padding:8px}.gal img{width:100%;border-radius:8px;display:block;cursor:zoom-in}.gal figcaption{font-size:13px;margin-top:6px}
+#zoom{position:fixed;inset:0;background:rgba(0,0,0,.85);display:grid;place-items:center;padding:12px;z-index:9}#zoom img{max-width:100%;max-height:100%}
+label.chk{display:flex;gap:8px;align-items:center}
+ul.plain{margin:0;padding-left:18px}
+</style></head>
+<body><main id="root"><p>Carregando…</p></main><div id="zoom" hidden></div>
+<script src="config.js"></script><script src="vendor/supabase.js"></script><script src="lib.js"></script><script src="painel.js"></script>
+<script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
+</body></html>
